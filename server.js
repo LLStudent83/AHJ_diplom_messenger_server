@@ -95,7 +95,7 @@ wsServer.on('connection', (ws) => { // подписываемся на собы�
       }
     }
 
-    if (action === 'postMessage') { // Ниже логика рассылки сообщения
+    if (action === 'postMessage') { // Ниже логика рассылки сообщения/
       const { login, message, dateMessage } = JSON.parse(e);
       messages.push(JSON.parse(e));
       Array.from(wsServer.clients)
