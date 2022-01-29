@@ -1,0 +1,22 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    // "parserOptions": {
+    //     "ecmaVersion": 2015
+    // },
+    "rules": {
+        "no-restricted-syntax": [
+            "error",
+            "LabeledStatement",
+            "WithStatement"
+          ],
+          "no-console": "off",
+          "linebreak-style": 0
+    }
+}
