@@ -66,8 +66,10 @@ wsServer.on('connection', (ws) => { // подписываемся на собы�
   const errCallback = (e) => { console.log('errCallback', e); };
 
   ws.on('message', (e) => { // подписываемся на событие message, сработает когда придет сообщение на сервер. Сообщение находится в 'e'
-    const { action } = JSON.parse(e);
+    // console.log('данные пришли', e);
 
+    const { action } = JSON.parse(e);
+    // console.log('данные пришли', JSON.parse(e));
     if (action === 'signIn') { // ниже логика регистрации пользователя в чате
       const { login } = JSON.parse(e);
       if (!sign.contains(login)) {
@@ -84,7 +86,6 @@ wsServer.on('connection', (ws) => { // подписываемся на собы�
             },
           })));
         clients[login] = ws; // формируем объект подключеных пользователей для формирования дальнейшей логики выхода пользователя из чата
-        // console.log('mesage', clients);
       } else {
         ws.send(JSON.stringify({
           action: 'signIn',
@@ -95,8 +96,13 @@ wsServer.on('connection', (ws) => { // подписываемся на собы�
       }
     }
 
-    if (action === 'postMessage') { // Ниже логика рассылки сообщения/
-      const { login, message, dateMessage } = JSON.parse(e);
+    if (action === 'postMessage') { // Далее логика рассылки сообщения
+      // console.log('данные пришли', JSON.parse(e));
+
+      const {
+        login, message, dateMessage, coordinates, typeMes, filesName,
+      } = JSON.parse(e);
+      // console.log('message', message);
       messages.push(JSON.parse(e));
       Array.from(wsServer.clients)
         .filter((client) => client.readyState === WS.OPEN)
@@ -107,6 +113,9 @@ wsServer.on('connection', (ws) => { // подписываемся на собы�
             message,
             dateMessage,
             login,
+            coordinates,
+            typeMes,
+            filesName,
           },
         })));
     }
