@@ -13,13 +13,9 @@ class WebsocketApi {
     this.ws = ws;
     this.ws.on('message', (e) => { this.handlesEventMessage(e); });
     this.ws.on('close', () => { this.handlesEventClose(); });
-
-    console.log('обработчики message и close установлены');
   }
 
   handlesEventMessage(e) {
-    console.log('сработало событие message', e);
-
     const { action } = JSON.parse(e);
     if (action === 'signIn') {
       this.signIn(e);
@@ -61,8 +57,8 @@ class WebsocketApi {
     const {
       login, message, dateMessage, coordinates, typeMes, filesName,
     } = JSON.parse(e);
-    // console.log('message', message);
-    this.messages.push(JSON.parse(e)); // сохраняем поступившее сообщение в массив сообщений
+    // сохраняем поступившее сообщение в массив сообщений
+    this.messages.push(JSON.parse(e));
     Array.from(this.wsServer.clients)
       .filter((client) => client.readyState === this.WS.OPEN)
       .forEach((client) => client.send(JSON.stringify({
